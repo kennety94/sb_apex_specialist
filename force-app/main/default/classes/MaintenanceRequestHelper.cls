@@ -19,9 +19,10 @@ public with sharing class MaintenanceRequestHelper {
                     
                     if(lstDueDates.get(c.Id) != null) {
                         newCase.Date_Due__c = Date.today() + lstDueDates.get(c.Id);
-                    } else {
-                        newCase.Date_Due__c = Date.today();
-                    }
+                    } 
+                    //else {
+                    //    newCase.Date_Due__c = Date.today();
+                    //}
                     
                     newCases.add(newCase);
                     mpCases.put(c.Id, newCase);
