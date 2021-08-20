@@ -1,8 +1,9 @@
-public with sharing class WarehouseCalloutService implements Queueable {
+public with sharing class WarehouseCalloutService {
 
     private static final String WAREHOUSE_URL = 'https://th-superbadge-apex.herokuapp.com/equipment';
     
-    public void execute(QueueableContext ctx) {
+    @future(callout=true)
+    public static void execute() {
 
         List<WarehouseJSON> results = getEquipmentWarehouseItems();
         List<Product2> equipments = new List<Product2>();
@@ -31,11 +32,11 @@ public with sharing class WarehouseCalloutService implements Queueable {
         
         HttpResponse res = http.send(req);
 
+        List<WarehouseJSON> results = new List<WarehouseJSON>();
         if(res.getStatusCode() == 200) {
-            List<WarehouseJSON> results = WarehouseJSON.parse(res.getBody());
-            return results;
+            results = WarehouseJSON.parse(res.getBody());
         }
-        return null;
+        return results;
     }
     
 }
